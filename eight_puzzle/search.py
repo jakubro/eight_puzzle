@@ -3,7 +3,6 @@ from typing import Callable, List, Optional, TypeVar
 
 import problem
 
-T_State = TypeVar('T_State')
 T_Action = TypeVar('T_Action')
 
 _log = logging.getLogger()
@@ -25,7 +24,7 @@ class Node:
 
 def a_star(
         state: problem.Problem,
-        heuristic: Callable[[T_State], int],
+        heuristic: Callable[[problem.Problem], int],
 ) -> Node:
     node = Node(state, None, None, 0)
     frontier: List[Node] = [node]
@@ -46,7 +45,7 @@ def a_star(
 def _a_star_iter(
         frontier: List[Node],
         explored: List[Node],
-        heuristic: Callable[[T_State], int],
+        heuristic: Callable[[problem.Problem], int],
 ) -> Optional[Node]:
     if not frontier:
         raise StopIteration()
@@ -60,13 +59,13 @@ def _a_star_iter(
 
     for action in node.state.actions():
         problem_ = node.state.invoke(action)
-        state = problem_.state()
-        child = Node(problem_, node, action, 1 + heuristic(state))
+        state = problem_.state
+        child = Node(problem_, node, action, 1 + heuristic(problem_))
 
         found = False
         if not found:
             for i, x in enumerate(frontier):
-                if state == x.state.state():
+                if state == x.state.state:
                     if child.cost > x.cost:
                         frontier[i] = child
                         frontier.sort(key=lambda it: it.cost, reverse=True)
@@ -74,7 +73,7 @@ def _a_star_iter(
 
         if not found:
             for x in explored:
-                if state == x.state.state():
+                if state == x.state.state:
                     found = True
                     break
 
