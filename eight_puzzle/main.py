@@ -10,7 +10,7 @@ import search
 def main() -> None:
     parser = argparse.ArgumentParser(description="8 puzzle.")
     parser.add_argument(
-        'action', choices=['solve', 'play'], default='solve')
+        'action', choices=['solve', 'play'])
     parser.add_argument(
         '-i', '--iterations', type=int, default=15,
         help="Number of iterations to shuffle solution before searching.")
