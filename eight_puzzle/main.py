@@ -48,11 +48,13 @@ def solve(args: argparse.Namespace) -> None:
     solution_ = search.a_star(problem_, heuristics.manhattan_distance)
 
     print("\nFound following solution:")
+    print()
     path = flatten_solution(solution_)
     for action, state in path:
-        print(state)
         if action:
-            print(action)
+            print(action.name)
+            print()
+        print(state)
         print()
 
     _, state = path[-1]
